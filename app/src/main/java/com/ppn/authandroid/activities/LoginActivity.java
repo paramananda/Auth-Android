@@ -5,14 +5,18 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.ppn.authandroid.R;
 import com.ppn.authandroid.Utils;
+import com.ppn.authandroid.models.User;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
+    private static final String TAG = "LoginActivity";
     private EditText mPasswordView;
     private View mLoginFormView;
     private View mContentView;
@@ -84,8 +88,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         mPasswordView.setError(null);
 
         // Store values at the time of the login attempt.
-        String email = mEmailView.getText().toString();
-        String password = mPasswordView.getText().toString();
+        String email = mEmailView.getText().toString().trim();
+        String password = mPasswordView.getText().toString().trim();
 
         View focusView = null;
 
@@ -107,7 +111,21 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         if (focusView != null) {
             focusView.requestFocus();
         } else {
+            User user = new User();
+            user.email = email;
+            user.password = password;
 
+            user.signin()
+                    .then(res -> {
+                        Log.i(TAG, "Signin success!");
+                        Toast.makeText(this, "Signin success.", Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(this, MainActivity.class));
+                        finish();
+                        return true;
+                    })
+                    .error(err -> {
+                        Log.e(TAG, "Error! " + err);
+                    });
         }
     }
 

@@ -25,6 +25,7 @@
 
 package com.ppn.authandroid.models;
 
+import android.text.TextUtils;
 import android.util.Log;
 
 import com.android.volley.Request;
@@ -50,8 +51,8 @@ public class User {
     public String password;
     public String about;
     public String photo;
-    public long createdAt;
-    public long updatedAt;
+    public String createdAt;
+    public String updatedAt;
     public boolean isAdmin;
 
 
@@ -86,6 +87,50 @@ public class User {
                         } else {
                             p.reject("Empty response!");
                         }
+                    }, p::reject);
+
+            App.volley().request(request);
+        } else {
+            p.reject("Invalid request body!");
+        }
+
+        return p;
+    }
+
+    public Promise signin() {
+        Promise p = new Promise();
+        JSONObject data = null;
+        try {
+            data = new JSONObject(new Gson().toJson(this));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        if (data != null) {
+            JsonObjectRequest request = new JsonObjectRequest
+                    (Request.Method.POST, App.getUrl(App.URL_SIGNIN),
+                            data, response -> {
+                        if (BuildConfig.DEBUG) {
+                            Log.i(TAG, "Response : " + response.toString());
+                        }
+                        User user = null;
+
+                        JSONObject obj = response.optJSONObject("data");
+                        String token = response.optString("token");
+                        Log.i(TAG, "Message : " + response.optString("message"));
+
+                        if (obj != null) {
+                            user = new Gson().fromJson(obj.toString(), User.class);
+                            p.resolve(user);
+                        }
+
+                        if (user != null && !TextUtils.isEmpty(token)) {
+                            App.saveToken(token);
+                            App.saveUser(user);
+                            Log.i(TAG, "Login success!");
+                        }else{
+                          p.reject("Login failed! Some internal Error, Try again.");
+                        }
+
                     }, p::reject);
 
             App.volley().request(request);

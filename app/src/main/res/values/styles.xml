@@ -39,8 +39,8 @@
 
     <style name="AppButton" parent="@android:style/Widget.Button">
         <item name="android:background">@drawable/background_button</item>
-        <item name="android:paddingLeft">16dip</item>
-        <item name="android:paddingRight">16dip</item>
+        <item name="android:paddingLeft">24dip</item>
+        <item name="android:paddingRight">24dip</item>
         <item name="android:paddingTop">12dip</item>
         <item name="android:paddingBottom">12dip</item>
     </style>

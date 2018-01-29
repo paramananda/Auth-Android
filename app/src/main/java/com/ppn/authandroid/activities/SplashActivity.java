@@ -145,15 +145,17 @@ public class SplashActivity extends AppCompatActivity {
 
 
     private void startMainActivity() {
-        if (isStoragePermissionGranted()) {
-            mUser = App.getAuthUser(false);
-            if (mUser != null) {
-                mHandler.postDelayed(() -> {
-                    Intent intent = new Intent(SplashActivity.this, MainActivity.class);
-                    startActivity(intent);
-                    SplashActivity.this.finish();
-                }, 500);
-            }
+       /* if (isStoragePermissionGranted()) {
+
+        }*/
+
+        mUser = App.getAuthUser(false);
+        if (mUser != null) {
+            mHandler.postDelayed(() -> {
+                Intent intent = new Intent(SplashActivity.this, MainActivity.class);
+                startActivity(intent);
+                SplashActivity.this.finish();
+            }, 500);
         }
     }
 

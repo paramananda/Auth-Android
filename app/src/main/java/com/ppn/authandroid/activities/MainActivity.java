@@ -34,14 +34,25 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.Html;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
+import android.widget.Toast;
 
+import com.ppn.authandroid.App;
 import com.ppn.authandroid.R;
+import com.ppn.authandroid.models.User;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+    private static final String TAG = "MainActivity";
+
+    private User mUser;
+    private TextView mTextGreen;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,7 +78,21 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        mTextGreen = findViewById(R.id.text_greet);
+
+        mUser = App.getAuthUser();
+        if (mUser == null) {
+            App.signout();
+            Log.i(TAG, "mUser not found! finishing.");
+            Toast.makeText(this, "Try login agian!", Toast.LENGTH_LONG).show();
+            finish();
+            return;
+        }
+
+        refreshView();
     }
+
 
     @Override
     public void onBackPressed() {
@@ -98,6 +123,17 @@ public class MainActivity extends AppCompatActivity
             return true;
         }
 
+        switch (id) {
+            case R.id.action_logout: {
+                App.signout();
+                finish();
+                return true;
+            }
+            case R.id.action_settings: {
+                return true;
+            }
+        }
+
         return super.onOptionsItemSelected(item);
     }
 
@@ -124,5 +160,11 @@ public class MainActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+
+    private void refreshView() {
+
+        mTextGreen.setText(Html.fromHtml("Welcome to Android World! <h2>" + mUser.firstName + " " + mUser.lastName + "</h2>"));
     }
 }

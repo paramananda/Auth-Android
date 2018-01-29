@@ -10,6 +10,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.ppn.authandroid.R;
 import com.ppn.authandroid.Utils;
@@ -120,6 +121,7 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
             user.signup()
                     .then(res -> {
                         Log.i(TAG, "Signup success!");
+                        Toast.makeText(this, "Signup Success.", Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(this, LoginActivity.class));
                         finish();
                         return true;

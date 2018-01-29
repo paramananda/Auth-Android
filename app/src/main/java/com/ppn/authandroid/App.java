@@ -28,6 +28,7 @@ package com.ppn.authandroid;
 
 import android.app.Application;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.PowerManager;
 import android.preference.PreferenceManager;
@@ -35,6 +36,7 @@ import android.text.TextUtils;
 import android.util.Log;
 
 import com.google.gson.Gson;
+import com.ppn.authandroid.activities.LoginActivity;
 import com.ppn.authandroid.models.User;
 
 
@@ -43,9 +45,12 @@ public class App extends Application {
     private static final String TAG = "App";
     private static final String KEY_AUTH_USER = "auth.user";
     private static final String KEY_AUTH_TOKEN = "auth.token";
-    private static final String URL_HOST = "http://localhost:3000";
+
+    // private static final String URL_HOST = "http://localhost:3000";
+    private static final String URL_HOST = "http://10.0.2.2:3000"; // from android Emulator
+
     public static final String URL_SIGNUP = "/api/users/password-signup";
-    private static final String URL_SIGNIN = "/api/users/password-signin";
+    public static final String URL_SIGNIN = "/api/users/password-signin";
 
     public static SharedPreferences sPreferences;
     private static Context sContext;
@@ -138,10 +143,16 @@ public class App extends Application {
     }
 
     public static boolean isSignin() {
-        if (!TextUtils.isEmpty(getAuthToken())) {
+        if (!TextUtils.isEmpty(getAuthToken()) && getAuthUser() != null) {
             return true;
         }
         return false;
     }
 
+    public static void signout() {
+        sPreferences.edit().remove(KEY_AUTH_TOKEN).remove(KEY_AUTH_USER).apply();
+        sAuthUser = null;
+        sAuthToken = null;
+        sContext.startActivity(new Intent(sContext, LoginActivity.class));
+    }
 }
