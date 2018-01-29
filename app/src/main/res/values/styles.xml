@@ -41,8 +41,8 @@
         <item name="android:background">@drawable/background_button</item>
         <item name="android:paddingLeft">24dip</item>
         <item name="android:paddingRight">24dip</item>
-        <item name="android:paddingTop">12dip</item>
-        <item name="android:paddingBottom">12dip</item>
+        <item name="android:paddingTop">10dip</item>
+        <item name="android:paddingBottom">10dip</item>
     </style>
 
 </resources>

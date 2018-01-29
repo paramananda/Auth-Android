@@ -11,16 +11,16 @@
 
     <ScrollView
         android:id="@+id/login_form"
-        android:layout_weight="1"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_weight="1">
 
         <LinearLayout
             android:id="@+id/email_login_form"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="16dp"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:padding="16dp">
 
             <ImageView
                 android:layout_width="72dp"
@@ -85,7 +85,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/separator"
-        android:elevation="1dp"
+        android:elevation="2dp"
         android:gravity="right"
         android:orientation="horizontal"
         android:paddingBottom="8dp"
