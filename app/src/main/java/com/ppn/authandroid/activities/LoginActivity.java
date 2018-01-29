@@ -3,6 +3,7 @@ package com.ppn.authandroid.activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
@@ -11,23 +12,21 @@ import android.widget.EditText;
 import com.ppn.authandroid.R;
 import com.ppn.authandroid.Utils;
 
-/**
- * A login screen that offers login via email/password.
- */
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
-
-    // UI references.
-    private EditText mEmailView;
     private EditText mPasswordView;
     private View mLoginFormView;
     private View mContentView;
+    private EditText mEmailView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        mContentView = findViewById(R.id.content_view);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
+
+        mContentView = findViewById(R.id.content_view);
         mEmailView = (EditText) findViewById(R.id.edit_email);
 
         mPasswordView = (EditText) findViewById(R.id.edit_password);
@@ -46,7 +45,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     @Override
     protected void onResume() {
         super.onResume();
-        ensureFullScreen();
+        // ensureFullScreen();
     }
 
     private void ensureFullScreen() {
@@ -114,4 +113,3 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
 
 }
-

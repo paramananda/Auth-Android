@@ -2,7 +2,10 @@ package com.ppn.authandroid.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -20,11 +23,14 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
             mEditTextEmail,
             mEditTextPassword;
     private View mContentView;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
 
         mContentView = findViewById(R.id.content_view);
 
@@ -35,10 +41,11 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
 
     }
 
+
     @Override
     protected void onResume() {
         super.onResume();
-        ensureFullScreen();
+        // ensureFullScreen();
     }
 
     private void ensureFullScreen() {
@@ -122,4 +129,5 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
                     });
         }
     }
+
 }
